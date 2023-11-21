@@ -9,6 +9,7 @@ namespace TachographSimulator
 {
     internal class Program
     {
+        private static readonly List<string> DriverIds = new List<string> { "DriverA", "DriverB", "DriverC" }; // Add your driver IDs here
         static void Main(string[] args)
         {
             //List<TachographData> myList = new List<TachographData>();
@@ -25,7 +26,7 @@ namespace TachographSimulator
             //}
 
             // Create an instance of the TachographDataGenerator
-            var generator = new TachographDataGenerator();
+            var simulator = new TachoSimulator();
 
             // Flag to indicate whether the simulation is running
             bool isSimulationRunning = false;
@@ -52,8 +53,9 @@ namespace TachographSimulator
                             {
                                 while (isSimulationRunning)
                                 {
+
                                     // Generate simulated data (adjust as needed)
-                                    var simulatedData = generator.GenerateDriverData("Driver A", DateTime.Now.Date);
+                                    var simulatedData = simulator.StartSimulation("Driver A", DateTime.Now.Date);
 
                                     // Print or process the simulated data as needed
                                     foreach (var dataPoint in simulatedData)

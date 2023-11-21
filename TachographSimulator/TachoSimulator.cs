@@ -15,20 +15,16 @@ namespace TachographSimulator
         //    _dataStorage = dataStorage;
         //}
         List<TachographData> simulatedData;
-        public List<TachographData> StartSimulation()
+        public List<TachographData> StartSimulation(string driverId,DateTime date)
         {
             // Start generating simulated data for up to 100 drivers
             // Follow the specified rules for driver activities and violations
             // Save generated data to the database
             
-                var generator = new TachographDataGenerator();
-                var driverId = "Driver A";
-                var date = new DateTime(2023, 11, 01);
-
-                simulatedData = generator.GenerateDriverData(driverId, date);
-
+               var generator = new TachographDataGenerator();
+               simulatedData = generator.GenerateDriverData(driverId, date);
                
-                return simulatedData;
+               return simulatedData;
             
             
         }
