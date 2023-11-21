@@ -12,20 +12,9 @@ namespace TachographSimulator
         private static readonly List<string> DriverIds = new List<string> { "DriverA", "DriverB", "DriverC" }; // Add your driver IDs here
         static void Main(string[] args)
         {
-            //List<TachographData> myList = new List<TachographData>();
-            //TachoSimulator sObj = new TachoSimulator();
-            //myList=sObj.StartSimulation();
-            //foreach (var dataPoint in myList)
-            //{
-            //    Console.WriteLine($"Driver: {dataPoint.DriverId}");
-            //    Console.WriteLine($"Date: {dataPoint.StartTime.ToShortDateString()}");
-            //    Console.WriteLine($"Time Start: {dataPoint.StartTime.ToLongTimeString()}");
-            //    Console.WriteLine($"Time End: {dataPoint.EndTime.ToLongTimeString()}");
-            //    Console.WriteLine($"Activity: {dataPoint.Activity}");
-            //    Console.WriteLine();
-            //}
+            
 
-            // Create an instance of the TachographDataGenerator
+            // Create an instance of the TachographSimulator
             var simulator = new TachoSimulator();
 
             // Flag to indicate whether the simulation is running
@@ -53,9 +42,8 @@ namespace TachographSimulator
                             {
                                 while (isSimulationRunning)
                                 {
-
                                     // Generate simulated data (adjust as needed)
-                                    var simulatedData = simulator.StartSimulation("Driver A", DateTime.Now.Date);
+                                    var simulatedData = simulator.StartSimulation(DriverIds, DateTime.Now.Date);
 
                                     // Print or process the simulated data as needed
                                     foreach (var dataPoint in simulatedData)

@@ -33,5 +33,30 @@ namespace TachographSimulator
             return data;
         }
 
+        public List<TachographData> GenerateAllDriverData(List<string> driverIds, DateTime date)
+        {
+            List<TachographData> allData = new List<TachographData>();
+
+            foreach (var driverId in driverIds)
+            {
+                // Assume each driver starts at 08:00:00
+                DateTime currentTime = date.AddHours(8);
+
+                while (currentTime < date.AddHours(12)) // Assuming a 12-hour limit
+                {
+                    // Generate driving data
+                    TimeSpan drivingDuration = TimeSpan.FromMinutes(_random.Next(30, 240)); // 30 minutes to 4 hours
+                    allData.Add(new TachographData(driverId, currentTime, currentTime.Add(drivingDuration), "Driving"));
+                    currentTime = currentTime.Add(drivingDuration);
+
+                    // Generate rest data
+                    TimeSpan restDuration = TimeSpan.FromMinutes(_random.Next(30, 45)); // 30 minutes to 45 minutes
+                    allData.Add(new TachographData(driverId, currentTime, currentTime.Add(restDuration), "Rest"));
+                    currentTime = currentTime.Add(restDuration);
+                }
+            }
+
+            return allData;
+        }
     }
 }
