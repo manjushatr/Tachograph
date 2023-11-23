@@ -6,13 +6,41 @@ using System.Threading.Tasks;
 
 namespace TachographSimulator
 {
+
     internal class TachographDataGenerator
     {
+        // Dictionary to keep track of driving hours for each driver per day
+        private static Dictionary<string, Dictionary<DateTime, TimeSpan>> DrivingHoursPerDriver = new Dictionary<string, Dictionary<DateTime, TimeSpan>>();
+        // Maximum allowed driving hours per day
+        private const int MaxDrivingHoursPerDay = 12;
+        // Maximum allowed driving hours per week
+        private const int MaxDrivingHoursPerWeek = 60;
         private readonly Random _random = new Random();
 
         public List<TachographData> GenerateDriverData(string driverId, DateTime date)
         {
             List<TachographData> data = new List<TachographData>();
+
+            // Check for driving hour violations
+            if (HasDrivingHourViolations(driverId))
+            {
+                Console.WriteLine($"Driving hour violations detected for Driver {driverId}. No more files will be generated for this driver.");
+                
+            }
+
+            DateTime currentDate = DateTime.Now.Date;
+
+            // Check if the driver already has an activity recorded on the same day
+            if (!DrivingHoursPerDriver.ContainsKey(driverId))
+            {
+                DrivingHoursPerDriver[driverId] = new Dictionary<DateTime, TimeSpan>();
+            }
+
+            if (DrivingHoursPerDriver[driverId].ContainsKey(currentDate))
+            {
+                Console.WriteLine($"Driver {driverId} already has an activity recorded on {currentDate}. No more files will be generated for this driver on this day.");
+                
+            }
 
             // Assume driver drives for 4 hours and then rests for 45 minutes
             DateTime currentTime = date.AddHours(8); // Start at 08:00:00
@@ -58,5 +86,76 @@ namespace TachographSimulator
 
             return allData;
         }
+
+        public TimeSpan CalculateTotalDrivingHours(List<TachographData> simulatedData)
+        {
+            // Calculate total driving hours from simulated data
+            TimeSpan totalDrivingHours = TimeSpan.Zero;
+
+            foreach (var data in simulatedData)
+            {
+                if (data.Activity.Equals("Driving", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Assuming the timestamp is in a valid format, parse it to DateTime
+                    DateTime timestamp = DateTime.ParseExact(Convert.ToString(data.EndTime), "yyyy-MM-dd HH:mm:ss", null);
+                    totalDrivingHours += TimeSpan.FromHours(1); // Assuming each driving activity is for 1 hour, adjust as needed
+                }
+            }
+
+            return totalDrivingHours;
+        }
+        public double CalculateTotalWeeklyDrivingHours(string driverId)
+        {
+            // Calculate total weekly driving hours for the driver
+            double totalWeeklyDrivingHours = 0;
+
+            foreach (var entry in DrivingHoursPerDriver[driverId])
+            {
+                totalWeeklyDrivingHours += entry.Value.TotalHours;
+            }
+
+            return totalWeeklyDrivingHours;
+        }
+
+        public void UpdateDrivingHours(string driverId, DateTime currentDate, List<TachographData> simulatedData)
+        {
+            // Calculate total driving hours for the simulated data
+            TimeSpan totalDrivingHours = CalculateTotalDrivingHours(simulatedData);
+
+            // Update driving hours for the driver on the specified day
+            if (!DrivingHoursPerDriver[driverId].ContainsKey(currentDate))
+            {
+                DrivingHoursPerDriver[driverId][currentDate] = TimeSpan.Zero;
+            }
+
+            DrivingHoursPerDriver[driverId][currentDate] += totalDrivingHours;
+        }
+        public bool HasDrivingHourViolations(string driverId)
+        {
+            // Check if the driver has exceeded the maximum allowed driving hours per day or per week
+            if (DrivingHoursPerDriver.ContainsKey(driverId))
+            {
+                var currentDate = DateTime.Now.Date;
+
+                // Check for daily violation
+                if (DrivingHoursPerDriver[driverId].ContainsKey(currentDate) && DrivingHoursPerDriver[driverId][currentDate].TotalHours > MaxDrivingHoursPerDay)
+                {
+                    Console.WriteLine($"Daily driving hour violation detected for Driver {driverId} on {currentDate}.");
+                    return true;
+                }
+
+                // Check for weekly violation
+                var totalWeeklyDrivingHours = CalculateTotalWeeklyDrivingHours(driverId);
+                if (totalWeeklyDrivingHours > MaxDrivingHoursPerWeek)
+                {
+                    Console.WriteLine($"Weekly driving hour violation detected for Driver {driverId}.");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
     }
 }
