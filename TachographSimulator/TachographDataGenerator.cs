@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TachographSimulator.Entities;
 
 namespace TachographSimulator
 {
@@ -97,7 +98,7 @@ namespace TachographSimulator
                 if (data.Activity.Equals("Driving", StringComparison.OrdinalIgnoreCase))
                 {
                     // Assuming the timestamp is in a valid format, parse it to DateTime
-                    DateTime timestamp = DateTime.ParseExact(Convert.ToString(data.EndTime), "yyyy-MM-dd HH:mm:ss", null);
+                    //DateTime timestamp = DateTime.ParseExact(Convert.ToString(data.EndTime), "yyyy-MM-dd HH:mm:ss", null);
                     totalDrivingHours += TimeSpan.FromHours(1); // Assuming each driving activity is for 1 hour, adjust as needed
                 }
             }
@@ -155,6 +156,29 @@ namespace TachographSimulator
 
             return false;
         }
+        public List<ParsedData> ParseSimulatedData(List<TachographData> simulatedData)
+        {
+            List<ParsedData> parsedDataList = new List<ParsedData>();
+
+            foreach (var data in simulatedData)
+            {
+                // Assuming the timestamp is in a valid format, parse it to DateTime
+                //DateTime timestamp = DateTime.ParseExact(data.Timestamp, "yyyy-MM-dd HH:mm:ss", null);
+
+                // Create a new ParsedData object
+                ParsedData parsedData = new ParsedData
+                {
+                    Timestamp = data.StartTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    DriverId = data.DriverId,
+                    Activity = data.Activity
+                };
+
+                parsedDataList.Add(parsedData);
+            }
+
+            return parsedDataList;
+        }
+
 
 
     }

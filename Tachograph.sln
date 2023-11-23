@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tachograph", "Tachograph\Tachograph.csproj", "{6B231381-8D60-4563-AF18-C5B3DED0621F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tachograph", "Tachograph\Tachograph.csproj", "{6B231381-8D60-4563-AF18-C5B3DED0621F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C672A6DC-E54B-4F51-9126-12B862F35978}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TachographSimulator", "TachographSimulator\TachographSimulator.csproj", "{767DA6BD-08AA-49E9-9A32-8D9D05DD512C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{D05583E1-F892-4643-9F7C-C4A7F3481F89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PosgredbService", "PosgredbService", "{AE3DF866-4863-4540-A32F-A749B5176AC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacographData.API", "TacographData.API\TacographData.API.csproj", "{E4D0FC49-C165-4946-9469-3258CF88181C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +29,19 @@ Global
 		{767DA6BD-08AA-49E9-9A32-8D9D05DD512C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{767DA6BD-08AA-49E9-9A32-8D9D05DD512C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{767DA6BD-08AA-49E9-9A32-8D9D05DD512C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4D0FC49-C165-4946-9469-3258CF88181C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D0FC49-C165-4946-9469-3258CF88181C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4D0FC49-C165-4946-9469-3258CF88181C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4D0FC49-C165-4946-9469-3258CF88181C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{767DA6BD-08AA-49E9-9A32-8D9D05DD512C} = {C672A6DC-E54B-4F51-9126-12B862F35978}
+		{D05583E1-F892-4643-9F7C-C4A7F3481F89} = {C672A6DC-E54B-4F51-9126-12B862F35978}
+		{AE3DF866-4863-4540-A32F-A749B5176AC2} = {D05583E1-F892-4643-9F7C-C4A7F3481F89}
+		{E4D0FC49-C165-4946-9469-3258CF88181C} = {AE3DF866-4863-4540-A32F-A749B5176AC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D898013F-CA8C-40D3-9A96-550A5CE7A6FE}

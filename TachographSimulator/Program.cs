@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TachographSimulator.Entities;
 
 namespace TachographSimulator
 {
@@ -19,6 +21,7 @@ namespace TachographSimulator
 
             // Create an instance of the TachographSimulator
             var simulator = new TachoSimulator();
+            var tachogenerator = new TachographDataGenerator();
 
             // Flag to indicate whether the simulation is running
             bool isSimulationRunning = false;
@@ -90,11 +93,27 @@ namespace TachographSimulator
 
                             string outputFilePath = $"{driverId}_SimulatedData.json";
                             //string outputFilePath = $"{driverId}{date1}{date2}{date3}{date4}{date5}_SimulatedData.json";
-                            TachographDataWriter.WriteToJsonFile(simulatedData, subdir);
+                            //TachographDataWriter.WriteToJsonFile(simulatedData, subdir);
 
                             Console.WriteLine($"Simulated data  saved to {outputFilePath}");
                             DateTime currentDate = DateTime.Now.Date;
-                            new TachographDataGenerator().UpdateDrivingHours(driverId, currentDate, simulatedData);
+                            tachogenerator.UpdateDrivingHours(driverId, currentDate, simulatedData);
+
+                            // Parse simulated data to the readable format
+                            List<ParsedData> parsedData = tachogenerator.ParseSimulatedData(simulatedData);
+
+                            string jsonData = JsonConvert.SerializeObject(parsedData, Formatting.Indented);
+                            public async Task CallWebAPIAsync()
+                            {
+                                var tachoData = "{'DriverId:parsed,'Name':'Steve'}";
+                                HttpClient client = new HttpClient();
+                                client.BaseAddress = new Uri("http://localhost:58847/");
+                                var response = await client.PostAsync("api/values", new StringContent(student, Encoding.UTF8, "application/json"));
+                                if (response != null)
+                                {
+                                    Console.WriteLine(response.ToString());
+                                }
+                            }
                         }
                         else
                         {
