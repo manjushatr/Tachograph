@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TacographData.API.Models
 {
     [Table("DriverInfo.TachoDriver")]
     public class TachoData
-    {         
-        [Column("trackid")]
+    {
+        [Key]
         public int TrackId { get; set; }
 
         [Column("timestamp")]

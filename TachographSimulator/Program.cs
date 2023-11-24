@@ -103,17 +103,7 @@ namespace TachographSimulator
                             List<ParsedData> parsedData = tachogenerator.ParseSimulatedData(simulatedData);
 
                             string jsonData = JsonConvert.SerializeObject(parsedData, Formatting.Indented);
-                            public async Task CallWebAPIAsync()
-                            {
-                                var tachoData = "{'DriverId:parsed,'Name':'Steve'}";
-                                HttpClient client = new HttpClient();
-                                client.BaseAddress = new Uri("http://localhost:58847/");
-                                var response = await client.PostAsync("api/values", new StringContent(student, Encoding.UTF8, "application/json"));
-                                if (response != null)
-                                {
-                                    Console.WriteLine(response.ToString());
-                                }
-                            }
+                            
                         }
                         else
                         {
